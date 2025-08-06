@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hợp Đồng Tình Yêu | Sushi & Cá</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* * CSS ĐỂ TẠO GIAO DIỆN VĂN BẢN PHÁP LÝ
+         * Font: Times New Roman là font tiêu chuẩn cho các văn bản hành chính tại Việt Nam.
+         * Bố cục: Đơn giản, trang trọng, tập trung vào nội dung.
+        */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #F0F2F5; /* Màu nền xám nhẹ để làm nổi bật trang văn bản */
+            color: #000;
+            line-height: 1.8;
+            margin: 0;
+            padding: 30px;
+            font-size: 16px; /* Cỡ chữ chuẩn cho văn bản */
+        }
+
+        .document-wrapper {
+            max-width: 800px; /* Tương đương khổ A4 */
+            margin: auto;
+            background: #fff;
+            padding: 60px 70px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+            border: 1px solid #ccc;
+            position: relative; /* Thêm để định vị con dấu */
+        }
+
+        /* PHẦN TIÊU ĐỀ QUỐC GIA */
+        .national-header {
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .national-header .motto {
+            text-transform: uppercase;
+            margin: 0;
+        }
+        .national-header .independence {
+            border-bottom: 1px solid #000;
+            display: inline-block;
+            padding-bottom: 2px;
+            margin: 5px 0 0 0;
+        }
+
+        /* PHẦN TIÊU ĐỀ HỢP ĐỒNG */
+        .contract-title {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        .contract-title h1 {
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 0;
+        }
+        .contract-title p {
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* CĂN CỨ KÝ KẾT */
+        .preamble {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        /* THÔNG TIN CÁC BÊN */
+        .party-info {
+            margin-bottom: 20px;
+        }
+        .party-info h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .party-info ul {
+            list-style: none;
+            padding-left: 15px;
+        }
+        .party-info li {
+            margin-bottom: 5px;
+        }
+
+        /* CÁC ĐIỀU KHOẢN */
+        .article {
+            margin-bottom: 20px;
+        }
+        .article h3 {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .article p, .article ol {
+            margin-bottom: 10px;
+        }
+        .article ol {
+            padding-left: 40px; /* Thụt lề cho danh sách điều khoản */
+        }
+        .article li {
+            margin-bottom: 8px;
+        }
+
+        /* PHẦN KÝ TÊN */
+        .signature-section {
+            margin-top: 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            text-align: center;
+            font-weight: bold;
+            position: relative; /* Thêm để định vị con dấu */
+            z-index: 1; /* Đảm bảo chữ ký nằm dưới con dấu */
+        }
+        .signature-area {
+            padding-top: 10px;
+        }
+        .signature-area p {
+            margin: 5px 0;
+        }
+        .signature-image-container {
+            height: 80px;
+            border-bottom: 1px solid #000;
+            margin: 10px 20px 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .signature-image {
+            max-width: 100%;
+            max-height: 70px;
+        }
+        .sign-button {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .sign-button:hover {
+            background-color: #34495e;
+        }
+
+        /* === PHẦN CON DẤU === */
+        .official-seal-container {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-10deg);
+            width: 160px;
+            height: 160px;
+            opacity: 0.85;
+            z-index: 2;
+            user-select: none;
+            pointer-events: none; /* Cho phép click xuyên qua con dấu */
+        }
+
+        .official-seal-container svg {
+            width: 100%;
+            height: 100%;
+            color: #D32F2F; /* Màu mực đỏ */
+        }
+        
+        .seal-text {
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bold;
+            font-size: 22px; /* Cỡ chữ cho vừa vặn cung tròn */
+            fill: currentColor;
+            text-transform: uppercase;
+        }
+        
+        .seal-star {
+             font-size: 20px;
+             font-weight: normal;
+        }
+        
+        /* === PHẦN BẢNG KÝ TÊN ĐIỆN TỬ (SIGNATURE PAD) === */
+        .signature-modal {
+            display: none; /* Ẩn mặc định */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        #signature-canvas {
+            border: 2px dashed #ccc;
+            border-radius: 4px;
+            cursor: crosshair;
+            touch-action: none; /* Quan trọng cho ký trên điện thoại */
+        }
+        .modal-buttons {
+            margin-top: 15px;
+        }
+        .modal-buttons button {
+            font-family: 'Times New Roman', Times, serif;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #clear-button {
+            background-color: #f1c40f;
+        }
+        #save-button {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        /* TƯƠNG THÍCH DI ĐỘNG */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .document-wrapper {
+                padding: 40px 25px;
+            }
+            .national-header, .signature-section {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .official-seal-container {
+                bottom: 300px; /* Điều chỉnh lại vị trí trên di động */
+                width: 140px;
+                height: 140px;
+            }
+            .signature-section .signature-area:first-child{
+                 margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="document-wrapper">
+        <header class="national-header">
+            <div>
+                <p class="motto">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</p>
+                <p class="independence">Độc lập - Tự do - Hạnh phúc</p>
+            </div>
+        </header>
+
+        <section class="contract-title">
+            <h1>HỢP ĐỒNG TÌNH YÊU</h1>
+            <p>(Số: 0408/2025/HĐTY-SC)</p>
+        </section>
+
+        <p class="preamble">
+            - Căn cứ vào Bộ luật Tình yêu và Hạnh phúc được trái tim thông qua.<br>
+            - Căn cứ vào sự tự nguyện, thấu hiểu và tình cảm chân thành của cả hai bên.
+        </p>
+
+        <p>Hôm nay, ngày 04 tháng 08 năm 2025, tại một nơi chỉ có hai chúng ta, chúng tôi gồm:</p>
+
+        <section class="party-info">
+            <h3>BÊN A: (Sau đây gọi là "Sushi" 🍣)</h3>
+            <ul>
+                <li><strong>Họ và tên:</strong> Lương Lê Vân Nam</li>
+                <li><strong>Ngày sinh:</strong> 19/01/2006</li>
+                <li><strong>Nơi ở hiện tại:</strong> Diễn Châu, Nghệ An</li>
+            </ul>
+        </section>
+
+        <section class="party-info">
+            <h3>BÊN B: (Sau đây gọi là "Cá" 🐠)</h3>
+            <ul>
+                <li><strong>Họ và tên:</strong> Nguyễn Bảo Trí</li>
+                <li><strong>Ngày sinh:</strong> 12/05/2002</li>
+                <li><strong>Nơi ở hiện tại:</strong> TP. Hồ Chí Minh</li>
+            </ul>
+        </section>
+
+        <p>Sau khi bàn bạc, hai bên đã thống nhất ký kết Hợp đồng Tình yêu với các điều khoản và điều kiện như sau:</p>
+
+        <article class="article">
+            <h3>Điều 1: Quyền và Nghĩa vụ của Bên A</h3>
+            <ol>
+                <li>Luôn duy trì sự dễ thương, trung thực; nghiêm cấm hành vi ghen tuông vô căn cứ gây ảnh hưởng đến hòa khí chung.</li>
+                <li>Được thực thi "quyền giận dỗi", tuy nhiên phải thông báo trước cho Bên B để có phương án xử lý kịp thời.</li>
+                <li>Có nghĩa vụ báo cáo, chia sẻ mọi cảm xúc, tâm tư với Bên B.</li>
+                <li>Được yêu cầu Bên B thực hiện các hành vi chăm sóc như ôm, hôn, hoặc cung cấp lương thực (đồ ăn vặt) vào bất kỳ thời điểm nào.</li>
+            </ol>
+        </article>
+
+        <article class="article">
+            <h3>Điều 2: Quyền và Nghĩa vụ của Bên B</h3>
+            <ol>
+                <li>Có nghĩa vụ bảo vệ, che chở và là người chủ động thực hiện hòa giải khi có tranh chấp, mâu thuẫn xảy ra.</li>
+                <li>Phải phản hồi thông điệp của Bên A trong thời hạn 02 (hai) giờ, trừ các trường hợp bất khả kháng (ngủ, họp khẩn, v.v.).</li>
+                <li>Khi Bên A thực thi "quyền giận dỗi", Bên B phải có biện pháp dỗ dành ngay lập tức bằng hành động hoặc lời nói phù hợp.</li>
+                <li>Cam kết trung thành tuyệt đối, không có bất kỳ hành vi tương tác (thả tim, bình luận) với các đối tượng khác giới có khả năng gây hiểu lầm.</li>
+            </ol>
+        </article>
+
+        <article class="article">
+            <h3>Điều 3: Điều Khoản Thi Hành Chung</h3>
+            <ol>
+                <li>Hai bên phải tổ chức ít nhất 01 (một) buổi hẹn hò mỗi tháng.</li>
+                <li>Thực hiện đầy đủ nghi thức chúc ngủ ngon và chúc ngày mới tốt lành hàng ngày.</li>
+                <li>Khi một bên có dấu hiệu bất ổn về tinh thần (buồn), bên còn lại phải có trách nhiệm lắng nghe và an ủi.</li>
+                <li>Nghiêm cấm sự can thiệp của bên thứ ba vào mối quan hệ hợp đồng này.</li>
+            </ol>
+        </article>
+        
+        <article class="article">
+            <h3>Điều 4: Xử Lý Vi Phạm</h3>
+            <p>Bên nào vi phạm một trong các điều khoản trên sẽ bị xử phạt theo các hình thức sau (do bên bị vi phạm quyết định):</p>
+            <ol type="a">
+                <li>Soạn thảo văn bản xin lỗi (thư tay) với độ dài tối thiểu 500 từ.</li>
+                <li>Bồi thường thiệt hại bằng hiện vật (trà sữa, đồ ăn vặt).</li>
+                <li>Thực hiện một tiết mục văn nghệ (hát) để chuộc lỗi.</li>
+            </ol>
+        </article>
+
+        <article class="article">
+            <h3>Điều 5: Hiệu Lực Hợp Đồng</h3>
+            <p>Hợp đồng này có hiệu lực kể từ ngày ký và có giá trị vô thời hạn. Mọi sửa đổi, bổ sung phải được sự đồng ý bằng văn bản của cả hai bên.</p>
+        </article>
+
+        <footer class="signature-section">
+            <div class="signature-area">
+                <p>ĐẠI DIỆN BÊN A</p>
+                <i>(Ký và ghi rõ họ tên)</i>
+                <div class="signature-image-container">
+                    <img id="signature-image-A" class="signature-image" src="" alt="Chữ ký Bên A">
+                </div>
+                <p>Lương Lê Vân Nam</p>
+                <button class="sign-button" data-party="A">Ký tên</button>
+            </div>
+            <div class="signature-area">
+                <p>ĐẠI DIỆN BÊN B</p>
+                <i>(Ký và ghi rõ họ tên)</i>
+                <div class="signature-image-container">
+                     <img id="signature-image-B" class="signature-image" src="" alt="Chữ ký Bên B">
+                </div>
+                <p>Nguyễn Bảo Trí</p>
+                 <button class="sign-button" data-party="B">Ký tên</button>
+            </div>
+        </footer>
+
+        <!-- === CON DẤU ĐÃ ĐƯỢC CHÈN VÀO === -->
+        <div class="official-seal-container">
+            <svg viewBox="0 0 200 200">
+                <!-- Đường dẫn ẩn cho chữ cong -->
+                <defs>
+                    <path id="seal-path-top" d="M 30 105 A 70 70, 0, 1, 1, 170 105" fill="none"></path>
+                    <path id="seal-path-bottom" d="M 30 95 A 70 70, 0, 1, 0, 170 95" fill="none"></path>
+                </defs>
+
+                <!-- Viền ngoài -->
+                <circle cx="100" cy="100" r="98" stroke="currentColor" stroke-width="4" fill="none"></circle>
+                <circle cx="100" cy="100" r="93" stroke="currentColor" stroke-width="1.5" fill="none"></circle>
+                
+                <!-- Chữ cong phía trên -->
+                <text class="seal-text" letter-spacing="2.5">
+                    <textPath href="#seal-path-top" startOffset="50%" text-anchor="middle">TÒA ÁN TÌNH YÊU</textPath>
+                </text>
+                
+                <!-- Chữ cong phía dưới -->
+                <text class="seal-text" letter-spacing="7">
+                    <textPath href="#seal-path-bottom" startOffset="50%" text-anchor="middle">TỐI CAO</textPath>
+                </text>
+                
+                <!-- Ngôi sao phân cách -->
+                <text class="seal-star" x="38" y="108" text-anchor="middle" fill="currentColor">★</text>
+                <text class="seal-star" x="162" y="108" text-anchor="middle" fill="currentColor">★</text>
+
+                <!-- Quốc huy từ link ảnh -->
+                <image href="https://upload.wikimedia.org/wikipedia/commons/a/a9/Emblem_of_Vietnam.svg" x="55" y="55" width="90" height="90"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- === CỬA SỔ KÝ TÊN ĐIỆN TỬ === -->
+    <div id="signature-modal" class="signature-modal">
+        <div class="modal-content">
+            <h3>Vui lòng ký tên vào khung bên dưới</h3>
+            <canvas id="signature-canvas"></canvas>
+            <div class="modal-buttons">
+                <button id="clear-button">Xóa</button>
+                <button id="save-button">Lưu chữ ký</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy các phần tử DOM cần thiết
+        const modal = document.getElementById('signature-modal');
+        const canvas = document.getElementById('signature-canvas');
+        const ctx = canvas.getContext('2d');
+        const signButtons = document.querySelectorAll('.sign-button');
+        const clearButton = document.getElementById('clear-button');
+        const saveButton = document.getElementById('save-button');
+
+        let drawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let currentParty = '';
+
+        // Thiết lập kích thước canvas
+        function resizeCanvas() {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            const modalContent = document.querySelector('.modal-content');
+            canvas.width = modalContent.clientWidth * 0.9 * ratio;
+            canvas.height = 200 * ratio; // Chiều cao cố định
+            canvas.style.width = `${modalContent.clientWidth * 0.9}px`;
+            canvas.style.height = '200px';
+            ctx.scale(ratio, ratio);
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+        }
+
+        // Bắt đầu vẽ
+        function startDrawing(e) {
+            drawing = true;
+            [lastX, lastY] = getCoords(e);
+        }
+
+        // Dừng vẽ
+        function stopDrawing() {
+            drawing = false;
+            ctx.beginPath();
+        }
+
+        // Vẽ
+        function draw(e) {
+            if (!drawing) return;
+            e.preventDefault(); // Ngăn cuộn trang khi đang vẽ trên điện thoại
+            const [x, y] = getCoords(e);
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            [lastX, lastY] = [x, y];
+        }
+
+        // Lấy tọa độ chính xác cho cả chuột và cảm ứng
+        function getCoords(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / (rect.width * window.devicePixelRatio);
+            const scaleY = canvas.height / (rect.height * window.devicePixelRatio);
+            
+            if (e.touches && e.touches.length > 0) {
+                return [
+                    (e.touches[0].clientX - rect.left) * scaleX,
+                    (e.touches[0].clientY - rect.top) * scaleY
+                ];
+            }
+            return [
+                (e.clientX - rect.left) * scaleX,
+                (e.clientY - rect.top) * scaleY
+            ];
+        }
+
+        // Xóa canvas
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Mở cửa sổ ký tên
+        signButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                currentParty = button.getAttribute('data-party');
+                modal.style.display = 'flex';
+                resizeCanvas();
+                clearCanvas();
+            });
+        });
+
+        // Đóng cửa sổ khi click ra ngoài
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Lưu chữ ký
+        saveButton.addEventListener('click', () => {
+            if (canvas.toDataURL() === document.createElement('canvas').toDataURL()) {
+                // Nếu canvas trống thì không lưu
+                return;
+            }
+            const signatureImage = document.getElementById(`signature-image-${currentParty}`);
+            signatureImage.src = canvas.toDataURL('image/png');
+            modal.style.display = 'none';
+        });
+
+        // Xóa chữ ký
+        clearButton.addEventListener('click', clearCanvas);
+
+        // Thêm các event listener cho cả chuột và cảm ứng
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+        canvas.addEventListener('mousemove', draw);
+
+        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('touchend', stopDrawing);
+        canvas.addEventListener('touchcancel', stopDrawing);
+        canvas.addEventListener('touchmove', draw);
+
+        // Thay đổi kích thước canvas khi cửa sổ thay đổi
+        window.addEventListener('resize', resizeCanvas);
+
+    </script>
+</body>
+</html>
